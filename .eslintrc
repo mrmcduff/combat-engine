@@ -4,6 +4,7 @@
   },
   "extends": [
     "eslint:recommended",
+    "@imaginary-cloud/react",
     "airbnb",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
@@ -27,6 +28,7 @@
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
     "no-undef": "off",
     "arrow-body-style": "off",
+    "semi": "warn",
     // the base rule can report incorrect errors when used with TypeScript
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
@@ -44,7 +46,7 @@
     "camelcase": [
       0
     ],
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "react/require-default-props": "off",
     "react/jsx-filename-extension": [
       1,
