@@ -5,7 +5,10 @@
     "jsx": "react",
     "esModuleInterop": true,
     "outDir": "dist",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "*": ["*"]
+    }
   },
   "include": ["src"]
 }
