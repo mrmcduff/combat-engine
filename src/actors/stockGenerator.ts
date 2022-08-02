@@ -1,6 +1,7 @@
 import { CorePhysical } from 'types/attributes/corePhysical';
 import { WeaponExperience } from 'types/attributes/weaponExperience';
 import { WeaponType } from 'types/weapons/weaponType';
+import { BaseCombatant } from './baseCombatant';
 import { Combatant } from './combatant';
 
 type StockCharacterType = 'ninja' | 'sumo';
@@ -82,48 +83,7 @@ export function generateWeaponExperience(charType: StockCharacterType, weaponTyp
 }
 
 export function generateStockCharacter(charType: StockCharacterType): Combatant {
-  switch (charType) {
-    case 'ninja': {
-      const ninja = {
-        coreBasePhysical: generateCorePhysical(charType),
-        variablePhysical: {
-          health: 35,
-          fatigue: 0,
-        },
-        effectivePhysical: generateCorePhysical(charType),
-        weaponExperience: new Map<WeaponType, WeaponExperience>(),
-        equippedWeapon: null,
-      };
-      ninja.weaponExperience.set('Unarmed', generateWeaponExperience('ninja', 'Unarmed'));
-      return ninja;
-    }
-    case 'sumo': {
-      const sumo = {
-        coreBasePhysical: generateCorePhysical(charType),
-        variablePhysical: {
-          health: 35,
-          fatigue: 0,
-        },
-        effectivePhysical: generateCorePhysical(charType),
-        weaponExperience: new Map<WeaponType, WeaponExperience>(),
-        equippedWeapon: null,
-      };
-      sumo.weaponExperience.set('Unarmed', generateWeaponExperience(charType, 'Unarmed'));
-      return sumo;
-    }
-    default: {
-      const sumo = {
-        coreBasePhysical: generateCorePhysical(charType),
-        variablePhysical: {
-          health: 35,
-          fatigue: 0,
-        },
-        effectivePhysical: generateCorePhysical(charType),
-        weaponExperience: new Map<WeaponType, WeaponExperience>(),
-        equippedWeapon: null,
-      };
-      sumo.weaponExperience.set('Unarmed', generateWeaponExperience(charType, 'Unarmed'));
-      return sumo;
-    }
-  }
+  const baseCombatant = new BaseCombatant(charType, generateCorePhysical(charType));
+  baseCombatant.weaponExperience.set('Unarmed', generateWeaponExperience(charType, 'Unarmed'));
+  return baseCombatant;
 }

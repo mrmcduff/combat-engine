@@ -10,7 +10,6 @@
     "build": "tsc && chmod +x dist/cli.js",
     "start": "ts-node -r tsconfig-paths/register dist/cli.js",
     "pretest": "yarn run build",
-    "test": "xo && ava",
     "lint": "eslint . --ext .ts --ext .tsx --config .eslintrc",
     "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
@@ -22,16 +21,6 @@
     "lodash": "^4.17.21",
     "meow": "^9.0.0",
     "react": "^17.0.2"
-  },
-  "ava": {
-    "typescript": {
-      "extensions": [
-        "tsx"
-      ],
-      "rewritePaths": {
-        "src/": "dist/"
-      }
-    }
   },
   "xo": {
     "extends": "xo-react",
