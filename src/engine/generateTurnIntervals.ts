@@ -3,7 +3,7 @@ import { generateNumericAttributeRatio } from './generateNumericAttributeRatio';
 
 const BASE_VALUE = 60;
 
-export function generateTurnIntervals(turnTaker: IntervalCapable) {
+export function generateTurnIntervals(turnTaker: IntervalCapable): number {
   const quickRatio = generateNumericAttributeRatio(turnTaker.getCorePhysical().quickness, false);
   const fatigueRatio = generateNumericAttributeRatio(turnTaker.getVarPhysical().fatigue, true);
   const focusRatio = generateNumericAttributeRatio(turnTaker.getCorePhysical().focus, false);
