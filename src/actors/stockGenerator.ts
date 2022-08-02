@@ -92,7 +92,7 @@ export function generateStockCharacter(charType: StockCharacterType): Combatant 
         },
         effectivePhysical: generateCorePhysical(charType),
         weaponExperience: new Map<WeaponType, WeaponExperience>(),
-        equippedWeapon: null,
+          equippedWeapon: null,
       };
       ninja.weaponExperience.set('Unarmed', generateWeaponExperience('ninja', 'Unarmed'));
       return ninja;
@@ -105,7 +105,7 @@ export function generateStockCharacter(charType: StockCharacterType): Combatant 
           fatigue: 0,
         },
         effectivePhysical: generateCorePhysical(charType),
-        weaponExperience: new Map<WeaponType, WeaponExperience>(),
+          weaponExperience: new Map<WeaponType, WeaponExperience>(),
         equippedWeapon: null,
       };
       sumo.weaponExperience.set('Unarmed', generateWeaponExperience(charType, 'Unarmed'));
