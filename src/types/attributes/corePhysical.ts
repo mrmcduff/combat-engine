@@ -1,4 +1,3 @@
-
 export interface CorePhysical {
   baseAtk: number;
   baseDef: number;

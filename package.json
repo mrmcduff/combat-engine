@@ -11,7 +11,8 @@
     "start": "ts-node -r tsconfig-paths/register dist/cli.js",
     "pretest": "yarn run build",
     "test": "xo && ava",
-    "lint": "eslint . --ext .ts --ext .tsx --config .eslintrc"
+    "lint": "eslint . --ext .ts --ext .tsx --config .eslintrc",
+    "pretty": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "files": [
     "dist/cli.js"
