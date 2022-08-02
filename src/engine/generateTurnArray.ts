@@ -1,4 +1,4 @@
-import { indexOf, times } from 'lodash';
+import { times } from 'lodash';
 import { IntervalCapable } from 'types/intervalCapable';
 import { generateDelay } from './generateDelay';
 import { generateTurnIntervals } from './generateTurnIntervals';
