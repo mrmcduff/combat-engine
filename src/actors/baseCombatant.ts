@@ -52,7 +52,15 @@ export class BaseCombatant implements Combatant {
     return cloneDeep(this.effectivePhysical);
   }
 
+  getEquippedWeapon(): Weapon | null {
+    return this.equippedWeapon;
+  }
+
   getVarPhysical(): VariablePhyiscal {
     return cloneDeep(this.variablePhysical);
+  }
+
+  getWeaponExperience(weaponType: WeaponType): WeaponExperience | null {
+    return this.weaponExperience.get(weaponType) ?? null;
   }
 }

@@ -13,4 +13,5 @@ export interface Combatant extends IntervalCapable, EquipCapable {
   effectivePhysical: CorePhysical;
   weaponExperience: Map<WeaponType, WeaponExperience>;
   equippedWeapon: Weapon | null;
+  getWeaponExperience: (weaponType: WeaponType) => WeaponExperience | null;
 }
