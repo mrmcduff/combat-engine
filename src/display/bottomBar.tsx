@@ -14,7 +14,7 @@ interface BottomBarProps {
 const BottomBar: React.FC<BottomBarProps> = ({ text }) => {
   const ninja = generateStockCharacter('ninja');
   const sumo = generateStockCharacter('sumo');
-  const turnArray = generateTurnArray([ninja, sumo]);
+  const turnArray = generateTurnArray([ninja, sumo], [0, 0]);
 
   const getColorFromAttackResult = (resultClass: AttackResultClass): string => {
     switch (resultClass) {
@@ -37,7 +37,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ text }) => {
         <Text
           color={getColorFromAttackResult(results[0].resultClass)}
         >{`The result was a ${results[0].resultClass}`}</Text>
-        {results[2].map(msg => (
+        {results[2].map((msg) => (
           <Text key={msg}>{msg}</Text>
         ))}
       </>

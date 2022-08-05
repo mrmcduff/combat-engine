@@ -2,8 +2,10 @@ import { Combatant } from 'actors/combatant';
 import { AttackResult } from 'types/combat/attackResult';
 import { AttackResultClass } from 'types/combat/attackResultClass';
 
-function generateEmptyAttackResult(resultClass: AttackResultClass) {
+function generateEmptyAttackResult(resultClass: AttackResultClass): AttackResult {
   return {
+    attackerName: '',
+    defenderName: '',
     damage: 0,
     delay: 0,
     balanceLoss: 0,
@@ -22,6 +24,10 @@ export function generateAttackResults(
 ): [AttackResult, AttackResult] {
   const atkResult = generateEmptyAttackResult(resultClass);
   const defResult = generateEmptyAttackResult(resultClass);
+  atkResult.attackerName = attacker.name;
+  atkResult.defenderName = defender.name;
+  defResult.attackerName = attacker.name;
+  defResult.defenderName = defender.name;
   switch (resultClass) {
     case 'Miss':
       atkResult.delay = 100 - attacker.getCorePhysical().quickness; // Generate Delay for miss
