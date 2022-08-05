@@ -67,7 +67,7 @@ export function generateWeaponExperience(charType: StockCharacterType, weaponTyp
         defExp: 40,
         balance: 50,
         parryExp: 35,
-        blockExp: 0,
+        blockExp: 20,
       };
     case 'sumo':
       return {
@@ -75,7 +75,7 @@ export function generateWeaponExperience(charType: StockCharacterType, weaponTyp
         defExp: 60,
         balance: 40,
         parryExp: 10,
-        blockExp: 0,
+        blockExp: 70,
       };
     default:
       return invalidExp;

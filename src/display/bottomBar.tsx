@@ -33,9 +33,14 @@ const BottomBar: React.FC<BottomBarProps> = ({ text }) => {
   const getAttackResults = (attacker: Combatant) => {
     const results = attacker.name === ninja.name ? executeAttack(ninja, sumo) : executeAttack(sumo, ninja);
     return (
-      <Text
-        color={getColorFromAttackResult(results[0].resultClass)}
-      >{`The result was a ${results[0].resultClass}`}</Text>
+      <>
+        <Text
+          color={getColorFromAttackResult(results[0].resultClass)}
+        >{`The result was a ${results[0].resultClass}`}</Text>
+        {results[2].map(msg => (
+          <Text key={msg}>{msg}</Text>
+        ))}
+      </>
     );
   };
 
@@ -47,7 +52,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ text }) => {
           return (
             <Box key={`${ta[0].name}-notification-${ta[1]}`} margin={1} flexDirection="column">
               <Text>{`The ${ta[0].name} goes ${generateOrdinalString(idx)} at time ${ta[1]}`}</Text>
-              <Text>{getAttackResults(ta[0])}</Text>
+              {getAttackResults(ta[0])}
             </Box>
           );
         })}

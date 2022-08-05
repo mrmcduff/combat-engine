@@ -8,4 +8,5 @@ export interface AttackResult {
   armorDamage: number;
   shieldDamage: number;
   resultClass: AttackResultClass;
+  fatigue: number;
 }
