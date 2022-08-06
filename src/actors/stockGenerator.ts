@@ -12,11 +12,11 @@ export function generateCorePhysical(
   const emptyAttributes: CorePhysical = {
     baseAtk: 0,
     baseDef: 0,
-    balance: 0,
+    agility: 0,
     quickness: 0,
     strength: 0,
     mass: 0,
-    focus: 0,
+    mentality: 0,
     stamina: 0,
     vitality: 0,
   };
@@ -25,11 +25,11 @@ export function generateCorePhysical(
       return {
         baseAtk: 30,
         baseDef: 30,
-        balance: 80,
+        agility: 80,
         quickness: 75,
         strength: 20,
         mass: 20,
-        focus: 65,
+        mentality: 65,
         stamina: 70,
         vitality: 45,
       };
@@ -37,11 +37,11 @@ export function generateCorePhysical(
       return {
         baseAtk: 40,
         baseDef: 60,
-        balance: 40,
+        agility: 40,
         quickness: 40,
         strength: 50,
         mass: 70,
-        focus: 65,
+        mentality: 65,
         stamina: 45,
         vitality: 70,
       };

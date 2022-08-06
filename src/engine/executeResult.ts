@@ -17,16 +17,18 @@ export function executeResult(
   result: AttackResult,
   overrideRandom?: number
 ): number {
-  const coreStats = combatant.getCorePhysical();
   const variableStats = combatant.getVarPhysical();
   // const weapon = combatant.getEquippedWeapon(); -- when we start having effects on weapons, shields, and armor, that also needs to be considered.
-  coreStats.balance = Math.min(coreStats.balance - result.balanceLoss, 0);
+  variableStats.balance = Math.max(
+    variableStats.balance - result.balanceLoss,
+    0
+  );
   variableStats.fatigue = Math.min(
     variableStats.fatigue + result.fatigue,
     ATTR_MAX
   );
+  // TODO: also affect focus here.
   variableStats.health = Math.max(variableStats.health - result.damage, 0);
-  combatant.updateCorePhysical(coreStats);
   combatant.updateVarPhysical(variableStats);
   return generateTurnDelay(combatant, result.delay, overrideRandom);
 }

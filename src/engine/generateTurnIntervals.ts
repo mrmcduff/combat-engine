@@ -13,7 +13,7 @@ export function generateTurnIntervals(turnTaker: IntervalCapable): number {
     true
   );
   const focusRatio = generateNumericAttributeRatio(
-    turnTaker.getCorePhysical().focus,
+    turnTaker.getVarPhysical().focus,
     false
   );
   const massRatio = generateNumericAttributeRatio(

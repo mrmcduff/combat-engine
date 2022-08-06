@@ -10,7 +10,7 @@ import { generateNumericAttributeRatio } from './generateNumericAttributeRatio';
  * @param combatant the combatant whose effective stats need to be updated
  */
 export function adjustPhysicalStatsFromFatigue(combatant: Combatant): void {
-  const { vitality, balance, focus } = combatant.getCorePhysical();
+  const { vitality } = combatant.getCorePhysical();
   const { fatigue } = combatant.getVarPhysical();
 
   // Vitality gives you a lift here, but its effects are also decayed
@@ -20,14 +20,14 @@ export function adjustPhysicalStatsFromFatigue(combatant: Combatant): void {
   const baseStats = combatant.getBaseCorePhysical();
   const updatedCore: CorePhysical = {
     mass: baseStats.mass, // not affected by fatigue for obvious reasons
-    balance: balance * averageRatio,
-    focus: focus * averageRatio, // Todo -- these can be directly affected, so should they be Var stats?
     baseAtk: baseStats.baseAtk * averageRatio,
     baseDef: baseStats.baseDef * averageRatio,
     strength: baseStats.strength * averageRatio,
     stamina: baseStats.stamina * averageRatio,
     vitality: baseStats.vitality * averageRatio,
     quickness: baseStats.quickness * averageRatio,
+    mentality: baseStats.mentality * averageRatio,
+    agility: baseStats.agility * averageRatio,
   };
   combatant.updateCorePhysical(updatedCore);
 }

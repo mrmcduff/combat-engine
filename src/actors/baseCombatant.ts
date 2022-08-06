@@ -7,6 +7,8 @@ import { cloneDeep } from 'lodash';
 import { calculateBaseHealth } from 'engine/calculateBaseHealth';
 
 import { StatusType } from 'types/status';
+import { calculateBaseFocus } from 'engine/calculateBaseFocus';
+import { calculateBaseBalance } from 'engine/calculateBaseBalance';
 import { Combatant } from './combatant';
 
 export class BaseCombatant implements Combatant {
@@ -40,6 +42,8 @@ export class BaseCombatant implements Combatant {
     this.derivedBasePhysical = {
       health: calculateBaseHealth(corePhysical),
       fatigue: 0,
+      balance: calculateBaseFocus(corePhysical),
+      focus: calculateBaseBalance(corePhysical),
     };
     this.variablePhysical = cloneDeep(this.derivedBasePhysical);
     this.weaponExperience = cloneDeep(weaponExperience);
