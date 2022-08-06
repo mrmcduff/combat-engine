@@ -17,6 +17,7 @@ export const STATUS_TYPE: StatusType[] = [
   'Amped',
   'Shaken',
 ];
+
 const STATUS_TYPE_STRINGS = [
   'Vulnerable',
   'Injured',

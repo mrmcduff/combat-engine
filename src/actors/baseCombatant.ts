@@ -6,6 +6,7 @@ import { WeaponType } from 'types/weapons/weaponType';
 import { cloneDeep } from 'lodash';
 import { calculateBaseHealth } from 'engine/calculateBaseHealth';
 
+import { StatusType } from 'types/status';
 import { Combatant } from './combatant';
 
 export class BaseCombatant implements Combatant {
@@ -20,6 +21,8 @@ export class BaseCombatant implements Combatant {
   effectivePhysical: CorePhysical;
 
   weaponExperience: Map<WeaponType, WeaponExperience>;
+
+  statusEffects: Map<StatusType, number>;
 
   equippedWeapon: Weapon | null;
 
@@ -41,6 +44,43 @@ export class BaseCombatant implements Combatant {
     this.variablePhysical = cloneDeep(this.derivedBasePhysical);
     this.weaponExperience = cloneDeep(weaponExperience);
     this.equippedWeapon = null;
+    this.statusEffects = new Map<StatusType, number>();
+  }
+
+  getBaseCorePhysical(): CorePhysical {
+    return cloneDeep(this.coreBasePhysical);
+  }
+
+  getActiveStatusEffects(): [StatusType, number][] {
+    const output: [StatusType, number][] = [];
+    this.statusEffects.forEach((turns: number, status: StatusType) => {
+      if (turns !== 0) {
+        // This will include both negative and positive values.
+        output.push([status, turns]);
+      }
+    });
+    return output;
+  }
+
+  getBaseVariablePhysical(): VariablePhyiscal {
+    return cloneDeep(this.derivedBasePhysical);
+  }
+
+  checkStatus(statusType: StatusType): number {
+    return this.statusEffects.get(statusType) ?? 0;
+  }
+
+  addStatus(statusType: StatusType, turns: number, additive = true): void {
+    const existing = this.statusEffects.get(statusType) ?? 0;
+    if (existing < 0 || turns < 0) {
+      this.statusEffects.set(statusType, -1);
+      return;
+    }
+    this.statusEffects.set(statusType, additive ? existing + turns : turns);
+  }
+
+  removeStatus(statusType: StatusType): void {
+    this.statusEffects.delete(statusType);
   }
 
   equipWeapon(weapon: Weapon): void {

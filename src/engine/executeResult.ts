@@ -1,4 +1,5 @@
 import { Combatant } from 'actors/combatant';
+import { ATTR_MAX } from 'constants/attributeValues';
 import { AttackResult } from 'types/combat/attackResult';
 import { generateTurnDelay } from './generateTurnDelay';
 
@@ -16,13 +17,16 @@ export function executeResult(
   result: AttackResult,
   overrideRandom?: number
 ): number {
-  const originalStats = combatant.getCorePhysical();
-  const originalVariableStats = combatant.getVarPhysical();
+  const coreStats = combatant.getCorePhysical();
+  const variableStats = combatant.getVarPhysical();
   // const weapon = combatant.getEquippedWeapon(); -- when we start having effects on weapons, shields, and armor, that also needs to be considered.
-  originalStats.balance -= result.balanceLoss;
-  originalVariableStats.fatigue += result.fatigue;
-  originalVariableStats.health -= result.damage;
-  combatant.updateCorePhysical(originalStats);
-  combatant.updateVarPhysical(originalVariableStats);
+  coreStats.balance = Math.min(coreStats.balance - result.balanceLoss, 0);
+  variableStats.fatigue = Math.min(
+    variableStats.fatigue + result.fatigue,
+    ATTR_MAX
+  );
+  variableStats.health = Math.max(variableStats.health - result.damage, 0);
+  combatant.updateCorePhysical(coreStats);
+  combatant.updateVarPhysical(variableStats);
   return generateTurnDelay(combatant, result.delay, overrideRandom);
 }
