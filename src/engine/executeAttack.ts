@@ -14,7 +14,7 @@ function aimScore(
   overrideRandom?: number
 ) {
   const { baseAtk } = attacker.getCorePhysical();
-  const { balance } = attacker.getCorePhysical();
+  const { balance } = attacker.getVarPhysical();
   const weaponExp =
     attacker.getWeaponExperience(
       attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
@@ -34,7 +34,7 @@ function dodgeScore(
 ) {
   const atkQuick = attacker.getCorePhysical().quickness;
   const defQuick = defender.getCorePhysical().quickness;
-  const defBalance = defender.getCorePhysical().balance;
+  const defBalance = defender.getVarPhysical().balance;
   const defenderMass = defender.getCorePhysical().mass;
 
   const atkWeaponExp =
@@ -70,7 +70,7 @@ function parryScore(
 ) {
   const atkQuick = attacker.getCorePhysical().quickness;
   const defQuick = defender.getCorePhysical().quickness;
-  const defBalance = defender.getCorePhysical().balance;
+  const defBalance = defender.getVarPhysical().balance;
 
   const atkWeaponExp =
     attacker.getWeaponExperience(
@@ -100,18 +100,10 @@ function blockScore(
   defender: Combatant,
   overrideRandom?: number
 ) {
-  const {
-    baseAtk,
-    quickness: atkQuick,
-    focus: atkFocus,
-    balance: atkBalance,
-  } = attacker.getCorePhysical();
-  const {
-    baseDef,
-    quickness: defQuick,
-    focus: defFocus,
-    balance: defBalance,
-  } = defender.getCorePhysical();
+  const { baseAtk, quickness: atkQuick } = attacker.getCorePhysical();
+  const { focus: atkFocus, balance: atkBalance } = attacker.getVarPhysical();
+  const { baseDef, quickness: defQuick } = defender.getCorePhysical();
+  const { focus: defFocus, balance: defBalance } = defender.getVarPhysical();
   const blockExp =
     defender.getWeaponExperience(
       attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'

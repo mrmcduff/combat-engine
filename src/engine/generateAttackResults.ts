@@ -33,17 +33,17 @@ export function generateAttackResults(
   switch (resultClass) {
     case 'Miss':
       atkResult.delay = 100 - attacker.getCorePhysical().quickness; // Generate Delay for miss
-      atkResult.balanceLoss = 100 - attacker.getCorePhysical().balance; // Potentially also check for vulnerable status
+      atkResult.balanceLoss = 100 - attacker.getVarPhysical().balance; // Potentially also check for vulnerable status
       break;
     case 'Dodge':
       atkResult.delay = 100 - attacker.getCorePhysical().quickness; // Generate Delay for miss
-      atkResult.balanceLoss = 100 - attacker.getCorePhysical().balance; // Potentially also check for vulnerable status
-      defResult.balanceLoss = 100 - defender.getCorePhysical().balance;
+      atkResult.balanceLoss = 100 - attacker.getVarPhysical().balance; // Potentially also check for vulnerable status
+      defResult.balanceLoss = 100 - defender.getVarPhysical().balance;
       defResult.delay = 100 - defender.getCorePhysical().quickness;
       atkResult.fatigue = 100 - attacker.getCorePhysical().stamina;
       defResult.fatigue = Math.max(
         100 -
-          defender.getCorePhysical().balance -
+          defender.getVarPhysical().balance -
           defender.getCorePhysical().stamina,
         0
       );

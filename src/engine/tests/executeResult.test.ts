@@ -19,21 +19,18 @@ describe('Tests for applying the results of an attack', () => {
     };
     const startHealth = ninja.getVarPhysical().health;
     const startFatigue = ninja.getVarPhysical().fatigue;
-    const startBalance = ninja.getCorePhysical().balance;
-    const startBaseBalance = ninja.coreBasePhysical.balance;
+    const startBalance = ninja.getVarPhysical().balance;
 
     const outputDelay = executeResult(ninja, atkResult, 1);
     const endHealth = ninja.getVarPhysical().health;
     const endFatigue = ninja.getVarPhysical().fatigue;
-    const endBalance = ninja.getCorePhysical().balance;
-    const endBaseBalance = ninja.coreBasePhysical.balance;
+    const endBalance = ninja.getVarPhysical().balance;
 
-    expect(outputDelay).toEqual(5.225);
+    expect(outputDelay).toEqual(4.625);
     expect(endFatigue).toBeGreaterThan(startFatigue);
     expect(endFatigue).toEqual(15);
     expect(endHealth).toBeLessThan(startHealth);
     expect(startHealth - endHealth).toEqual(8);
     expect(startBalance - endBalance).toEqual(10);
-    expect(endBaseBalance).toEqual(startBaseBalance);
   });
 });

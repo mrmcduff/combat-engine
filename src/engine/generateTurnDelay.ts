@@ -17,7 +17,7 @@ export function generateTurnDelay(
     true
   );
   const focusRatio = generateNumericAttributeRatio(
-    turnTaker.getCorePhysical().focus,
+    turnTaker.getVarPhysical().focus,
     false
   );
   const totalMultiplier = quickRatio + fatigueRatio + focusRatio ** 2;
