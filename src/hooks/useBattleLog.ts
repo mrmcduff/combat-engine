@@ -5,7 +5,7 @@ interface BattleLogState {
   results: AttackResult[][];
 }
 
-type BattleLogReturn = [
+type BattleLogReturn = readonly [
   state: BattleLogState,
   addResults: (results: AttackResult[]) => void,
   clear: () => void
@@ -43,5 +43,5 @@ export function useBattleLog(): BattleLogReturn {
   function clear() {
     dispatch({ type: 'clear' });
   }
-  return [state, addResults, clear];
+  return [state, addResults, clear] as const;
 }
