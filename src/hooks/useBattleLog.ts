@@ -5,7 +5,11 @@ interface BattleLogState {
   results: AttackResult[][];
 }
 
-type BattleLogReturn = [state: BattleLogState, addResults: (results: AttackResult[]) => void, clear: () => void];
+type BattleLogReturn = [
+  state: BattleLogState,
+  addResults: (results: AttackResult[]) => void,
+  clear: () => void
+];
 
 interface BattleAction {
   type: 'add' | 'clear';
