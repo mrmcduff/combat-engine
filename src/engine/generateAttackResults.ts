@@ -2,8 +2,12 @@ import { Combatant } from 'actors/combatant';
 import { AttackResult } from 'types/combat/attackResult';
 import { AttackResultClass } from 'types/combat/attackResultClass';
 
-function generateEmptyAttackResult(resultClass: AttackResultClass) {
+function generateEmptyAttackResult(
+  resultClass: AttackResultClass
+): AttackResult {
   return {
+    attackerName: '',
+    defenderName: '',
     damage: 0,
     delay: 0,
     balanceLoss: 0,
@@ -22,6 +26,10 @@ export function generateAttackResults(
 ): [AttackResult, AttackResult] {
   const atkResult = generateEmptyAttackResult(resultClass);
   const defResult = generateEmptyAttackResult(resultClass);
+  atkResult.attackerName = attacker.name;
+  atkResult.defenderName = defender.name;
+  defResult.attackerName = attacker.name;
+  defResult.defenderName = defender.name;
   switch (resultClass) {
     case 'Miss':
       atkResult.delay = 100 - attacker.getCorePhysical().quickness; // Generate Delay for miss
@@ -33,7 +41,12 @@ export function generateAttackResults(
       defResult.balanceLoss = 100 - defender.getCorePhysical().balance;
       defResult.delay = 100 - defender.getCorePhysical().quickness;
       atkResult.fatigue = 100 - attacker.getCorePhysical().stamina;
-      defResult.fatigue = Math.max(100 - defender.getCorePhysical().balance - defender.getCorePhysical().stamina, 0);
+      defResult.fatigue = Math.max(
+        100 -
+          defender.getCorePhysical().balance -
+          defender.getCorePhysical().stamina,
+        0
+      );
       break;
     case 'Parry':
       atkResult.delay = 5;

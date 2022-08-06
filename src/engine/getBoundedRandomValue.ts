@@ -1,4 +1,8 @@
-export function getBoundedRandomValue(min: number, max: number, override: number | null = null): number {
+export function getBoundedRandomValue(
+  min: number,
+  max: number,
+  override: number | null = null
+): number {
   if (override !== null) {
     return override;
   }

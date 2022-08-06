@@ -5,31 +5,48 @@ import { generateTurnIntervals } from './generateTurnIntervals';
 
 interface TurnArrayParams {
   length?: number;
-  overrideRandom?: boolean;
+  overrideRandom?: number;
 }
 
 const DEFAULT_PARAMS = {
   length: 10,
-  overrideRandom: false,
+  overrideRandom: undefined,
 };
 
-export function getTimeArrays(turnTakers: IntervalCapable[], length: number, overrideRandom: boolean): number[][] {
-  return turnTakers.map((tt) => {
-    const firstItem = generateDelay(tt, 'initial', overrideRandom);
+export function getTimeArrays(
+  turnTakers: IntervalCapable[],
+  fixedDelays: number[],
+  length: number,
+  overrideRandom?: number
+): number[][] {
+  return turnTakers.map((tt, idx) => {
+    const fixedAddon = idx < fixedDelays.length ? fixedDelays[idx]! : 0;
+    const firstItem = fixedAddon + generateDelay(tt, 'initial', overrideRandom);
     const interval = generateTurnIntervals(tt);
     return times(length, (index) => firstItem + index * interval);
   });
 }
 
 export function findSmallestFirstIndex(inputs: number[][]): number {
-  const firsts = inputs.map((ip) => (ip.length > 0 ? ip[0]! : Number.MAX_VALUE));
+  const firsts = inputs.map((ip) =>
+    ip.length > 0 ? ip[0]! : Number.MAX_VALUE
+  );
   return firsts.indexOf(Math.min(...firsts));
 }
 
-export function generateTurnArray<T extends IntervalCapable>(turnTakers: T[], params?: TurnArrayParams): [T, number][] {
+export function generateTurnArray<T extends IntervalCapable>(
+  turnTakers: T[],
+  fixedDelays: number[],
+  params?: TurnArrayParams
+): [T, number][] {
   const usedParams: TurnArrayParams = { ...DEFAULT_PARAMS, ...params };
   const length = usedParams.length ?? DEFAULT_PARAMS.length;
-  const timeArrays = getTimeArrays(turnTakers, length, params?.overrideRandom ?? DEFAULT_PARAMS.overrideRandom);
+  const timeArrays = getTimeArrays(
+    turnTakers,
+    fixedDelays,
+    length,
+    params?.overrideRandom ?? DEFAULT_PARAMS.overrideRandom
+  );
   const outputArray: [T, number][] = [];
   while (outputArray.length < length) {
     const nextIdx = findSmallestFirstIndex(timeArrays);

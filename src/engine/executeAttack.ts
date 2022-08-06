@@ -8,61 +8,131 @@ import { getBoundedRandomValue } from './getBoundedRandomValue';
 const SUCCESS_THRESHOLD = 50;
 const RATIO_MAX = 10;
 
-function aimScore(attacker: Combatant, defender: Combatant, overrideRandom?: number) {
+function aimScore(
+  attacker: Combatant,
+  defender: Combatant,
+  overrideRandom?: number
+) {
   const { baseAtk } = attacker.getCorePhysical();
   const { balance } = attacker.getCorePhysical();
-  const weaponExp = attacker.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.atkExp ?? 0;
+  const weaponExp =
+    attacker.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.atkExp ?? 0;
   const defenderMass = defender.getCorePhysical().mass;
-  const score = (100 * (baseAtk + balance + weaponExp + defenderMass)) / (4 * ATTR_MAX);
+  const score =
+    (100 * (baseAtk + balance + weaponExp + defenderMass)) / (4 * ATTR_MAX);
   const randomFactor = getBoundedRandomValue(0.85, 1.15, overrideRandom);
 
   return score * randomFactor;
 }
 
-function dodgeScore(attacker: Combatant, defender: Combatant, overrideRandom?: number) {
+function dodgeScore(
+  attacker: Combatant,
+  defender: Combatant,
+  overrideRandom?: number
+) {
   const atkQuick = attacker.getCorePhysical().quickness;
   const defQuick = defender.getCorePhysical().quickness;
   const defBalance = defender.getCorePhysical().balance;
   const defenderMass = defender.getCorePhysical().mass;
 
-  const atkWeaponExp = attacker.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.atkExp ?? 0;
-  const defWeaponExp = defender.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.defExp ?? 0;
+  const atkWeaponExp =
+    attacker.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.atkExp ?? 0;
+  const defWeaponExp =
+    defender.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.defExp ?? 0;
 
-  const quickRatio = Math.min(atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX, RATIO_MAX);
-  const expRatio = Math.min(atkWeaponExp !== 0 ? defWeaponExp / atkWeaponExp : RATIO_MAX, RATIO_MAX);
+  const quickRatio = Math.min(
+    atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX,
+    RATIO_MAX
+  );
+  const expRatio = Math.min(
+    atkWeaponExp !== 0 ? defWeaponExp / atkWeaponExp : RATIO_MAX,
+    RATIO_MAX
+  );
 
-  const score = (100 * quickRatio * expRatio * (defBalance + defenderMass)) / (2 * ATTR_MAX);
+  const score =
+    (100 * quickRatio * expRatio * (defBalance + defenderMass)) /
+    (2 * ATTR_MAX);
 
   const randomFactor = getBoundedRandomValue(0, 0.33, overrideRandom);
   return score * randomFactor;
 }
 
-function parryScore(attacker: Combatant, defender: Combatant, overrideRandom?: number) {
+function parryScore(
+  attacker: Combatant,
+  defender: Combatant,
+  overrideRandom?: number
+) {
   const atkQuick = attacker.getCorePhysical().quickness;
   const defQuick = defender.getCorePhysical().quickness;
   const defBalance = defender.getCorePhysical().balance;
 
-  const atkWeaponExp = attacker.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.atkExp ?? 0;
+  const atkWeaponExp =
+    attacker.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.atkExp ?? 0;
   const defWeaponParryExp =
-    defender.getWeaponExperience(defender.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.parryExp ?? 0;
+    defender.getWeaponExperience(
+      defender.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.parryExp ?? 0;
 
-  const quickRatio = Math.min(atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX, RATIO_MAX);
-  const expRatio = Math.min(atkWeaponExp !== 0 ? defWeaponParryExp / atkWeaponExp : RATIO_MAX, RATIO_MAX);
+  const quickRatio = Math.min(
+    atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX,
+    RATIO_MAX
+  );
+  const expRatio = Math.min(
+    atkWeaponExp !== 0 ? defWeaponParryExp / atkWeaponExp : RATIO_MAX,
+    RATIO_MAX
+  );
   const score = (100 * quickRatio * expRatio * defBalance) / ATTR_MAX;
   const randomFactor = getBoundedRandomValue(0.2, 1.2, overrideRandom);
 
   return score * randomFactor;
 }
 
-function blockScore(attacker: Combatant, defender: Combatant, overrideRandom?: number) {
-  const { baseAtk, quickness: atkQuick, focus: atkFocus, balance: atkBalance } = attacker.getCorePhysical();
-  const { baseDef, quickness: defQuick, focus: defFocus, balance: defBalance } = defender.getCorePhysical();
-  const blockExp = defender.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.blockExp ?? 0;
-  const atkExp = attacker.getWeaponExperience(attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed')?.atkExp ?? 0;
+function blockScore(
+  attacker: Combatant,
+  defender: Combatant,
+  overrideRandom?: number
+) {
+  const {
+    baseAtk,
+    quickness: atkQuick,
+    focus: atkFocus,
+    balance: atkBalance,
+  } = attacker.getCorePhysical();
+  const {
+    baseDef,
+    quickness: defQuick,
+    focus: defFocus,
+    balance: defBalance,
+  } = defender.getCorePhysical();
+  const blockExp =
+    defender.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.blockExp ?? 0;
+  const atkExp =
+    attacker.getWeaponExperience(
+      attacker.getEquippedWeapon()?.weaponType ?? 'Unarmed'
+    )?.atkExp ?? 0;
 
-  const quickRatio = Math.min(atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX, RATIO_MAX);
-  const expRatio = Math.min(atkExp !== 0 ? blockExp / atkExp : RATIO_MAX, RATIO_MAX);
-  const focusRatio = Math.min(atkFocus !== 0 ? defFocus / atkFocus : RATIO_MAX, RATIO_MAX);
+  const quickRatio = Math.min(
+    atkQuick !== 0 ? defQuick / atkQuick : RATIO_MAX,
+    RATIO_MAX
+  );
+  const expRatio = Math.min(
+    atkExp !== 0 ? blockExp / atkExp : RATIO_MAX,
+    RATIO_MAX
+  );
+  const focusRatio = Math.min(
+    atkFocus !== 0 ? defFocus / atkFocus : RATIO_MAX,
+    RATIO_MAX
+  );
 
   const score =
     (100 *
@@ -92,14 +162,20 @@ export function executeAttack(
   const aimed = aimedResult > SUCCESS_THRESHOLD;
   if (!aimed) {
     // Create the effects of the miss.
-    return [...generateAttackResults(attacker, defender, 'Miss'), debugMessages];
+    return [
+      ...generateAttackResults(attacker, defender, 'Miss'),
+      debugMessages,
+    ];
   }
   // 2. Did hit? -- check defender dodge
   const dodgeResult = dodgeScore(attacker, defender, overrideRandom);
   debugMessages.push(`Dodge result: ${dodgeResult}`);
   const dodged = dodgeResult > SUCCESS_THRESHOLD;
   if (dodged) {
-    return [...generateAttackResults(attacker, defender, 'Dodge'), debugMessages];
+    return [
+      ...generateAttackResults(attacker, defender, 'Dodge'),
+      debugMessages,
+    ];
   }
 
   // Defender quickness, defense experience, defense against weapon experience
@@ -109,17 +185,26 @@ export function executeAttack(
   const parried = parryResult > SUCCESS_THRESHOLD;
   debugMessages.push(`Parry result: ${parryResult}`);
   if (parried) {
-    return [...generateAttackResults(attacker, defender, 'Parry'), debugMessages];
+    return [
+      ...generateAttackResults(attacker, defender, 'Parry'),
+      debugMessages,
+    ];
   }
 
   const blockResult = blockScore(attacker, defender, overrideRandom);
   const blocked = blockResult > SUCCESS_THRESHOLD;
   debugMessages.push(`Block result: ${blockResult}`);
   if (blocked) {
-    return [...generateAttackResults(attacker, defender, 'Armor Block'), debugMessages];
+    return [
+      ...generateAttackResults(attacker, defender, 'Armor Block'),
+      debugMessages,
+    ];
   }
   // 4. Did block? -- check defender block
   // Defender's armor experience, def against weapon experience
 
-  return [...generateAttackResults(attacker, defender, 'Clean Hit'), debugMessages];
+  return [
+    ...generateAttackResults(attacker, defender, 'Clean Hit'),
+    debugMessages,
+  ];
 }
