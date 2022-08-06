@@ -30,6 +30,13 @@ const AppWrapper: React.FC = () => {
     if (attacker === null) {
       return;
     }
+
+    // 0 - combatant recovery
+    // 1 - apply fatigue update
+    // 2 - execute action/attack
+    // 3 - apply result (in battle hook?)
+    // 4 - apply fatigue update
+    
     const defender = attacker.name === ninja.name ? sumo : ninja;
     const [atkResult, defResult, _debugMessages] = executeAttack(attacker, defender);
     // const atkDelay = executeResult(attacker, atkResult);
