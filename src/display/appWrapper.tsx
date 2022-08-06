@@ -7,11 +7,12 @@ import { useBattleLog } from 'hooks/useBattleLog';
 import { Box, Text, useInput, useApp } from 'ink';
 import React, { useEffect, useState } from 'react';
 import BattleResults from './battleResults';
+import CombatantStatus from './combatantStatus';
 import InputArea from './inputArea';
 import TurnBar from './turnBar';
 
-function nameToColor(bluePerson: Combatant, actual: string): string {
-  if (actual === bluePerson.name) {
+function nameToColor(bluePerson: string, actual: string): string {
+  if (actual === bluePerson) {
     return 'blueBright';
   }
   return 'magentaBright';
@@ -20,6 +21,7 @@ function nameToColor(bluePerson: Combatant, actual: string): string {
 const AppWrapper: React.FC = () => {
   const { exit } = useApp();
   const ninja = generateStockCharacter('ninja');
+  const bluePerson = ninja.name;
   const sumo = generateStockCharacter('sumo');
   const [turnArray, setTurnArray] = useState<[Combatant, number][]>(generateTurnArray<Combatant>([ninja, sumo], [0, 0]));
   const [colorArray, setColorArray] = useState<string[]>([]);
@@ -50,11 +52,11 @@ const AppWrapper: React.FC = () => {
   };
 
   useEffect(() => {
-    setColorArray(turnArray.map((t) => nameToColor(ninja, t[0].name)));
-  }, [turnArray, ninja]);
+    setColorArray(turnArray.map((t) => nameToColor(bluePerson, t[0].name)));
+  }, [turnArray, bluePerson]);
   useEffect(() => {
-    setLogColorArray(results.map((res) => (res.length > 0 ? nameToColor(ninja, res[0]!.attackerName) : 'red')));
-  }, [results, ninja]);
+    setLogColorArray(results.map((res) => (res.length > 0 ? nameToColor(bluePerson, res[0]!.attackerName) : 'red')));
+  }, [results, bluePerson]);
 
   useInput((input, _key) => {
     if (input === 'q' || turnIdx > 9) {
@@ -63,15 +65,18 @@ const AppWrapper: React.FC = () => {
       clear();
       setTurnArray(generateTurnArray<Combatant>([ninja, sumo], [0, 0]));
       setTurnIdx(0);
+    } else if (input === 's') {
+      takeTurn();
     }
-    takeTurn();
   });
 
   return (
     <Box margin={2} flexDirection="column" justifyContent="space-between">
       <Text color="greenBright">---Turn-based Combat CLI---</Text>
       <InputArea />
+      <Text>{`${JSON.stringify(ninja)}`}</Text>
       <BattleResults results={results} colors={logColorArray} />
+      <CombatantStatus combatants={[ninja, sumo]} colors={['cyanBright', 'magentaBright']} />
       <TurnBar turns={turnArray} colors={colorArray} />
     </Box>
   );

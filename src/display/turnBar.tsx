@@ -13,10 +13,10 @@ const TurnBar: React.FC<TurnBarProps> = ({ turns, colors }) => {
   return (
     <Box marginTop={2} flexDirection="row" justifyContent="space-between">
       {turns.map((t, idx) => (
-        <>
-          <Text color={colors[idx]} >{`${idx > 0 ? ' ' : ''}${t[0].name} (${t[1]})`}</Text>
-          {idx < turns.length && <Text color="cyanBright">|</Text>}
-        </>
+        <React.Fragment key={`${t[0].name}-${t[1]}`}>
+          <Text color={colors[idx]} >{`${idx > 0 ? ' ' : ''}${t[0].name} (${t[1].toFixed(0)})`}</Text>
+          {(idx < turns.length) && <Text color="cyanBright">|</Text>}
+        </React.Fragment>
       ))}
     </Box>
   );

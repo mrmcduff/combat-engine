@@ -23,6 +23,14 @@ function getDelayFromType(delayType: DelayType): number {
   }
 }
 
-export function generateDelay(turnTaker: IntervalCapable, delayType: DelayType, overrideRandom?: number): number {
-  return generateTurnDelay(turnTaker, getDelayFromType(delayType), overrideRandom);
+export function generateDelay(
+  turnTaker: IntervalCapable,
+  delayType: DelayType,
+  overrideRandom?: number
+): number {
+  return generateTurnDelay(
+    turnTaker,
+    getDelayFromType(delayType),
+    overrideRandom
+  );
 }

@@ -28,7 +28,9 @@ export function getTimeArrays(
 }
 
 export function findSmallestFirstIndex(inputs: number[][]): number {
-  const firsts = inputs.map((ip) => (ip.length > 0 ? ip[0]! : Number.MAX_VALUE));
+  const firsts = inputs.map((ip) =>
+    ip.length > 0 ? ip[0]! : Number.MAX_VALUE
+  );
   return firsts.indexOf(Math.min(...firsts));
 }
 

@@ -2,7 +2,9 @@ import { Combatant } from 'actors/combatant';
 import { AttackResult } from 'types/combat/attackResult';
 import { AttackResultClass } from 'types/combat/attackResultClass';
 
-function generateEmptyAttackResult(resultClass: AttackResultClass): AttackResult {
+function generateEmptyAttackResult(
+  resultClass: AttackResultClass
+): AttackResult {
   return {
     attackerName: '',
     defenderName: '',
@@ -39,7 +41,12 @@ export function generateAttackResults(
       defResult.balanceLoss = 100 - defender.getCorePhysical().balance;
       defResult.delay = 100 - defender.getCorePhysical().quickness;
       atkResult.fatigue = 100 - attacker.getCorePhysical().stamina;
-      defResult.fatigue = Math.max(100 - defender.getCorePhysical().balance - defender.getCorePhysical().stamina, 0);
+      defResult.fatigue = Math.max(
+        100 -
+          defender.getCorePhysical().balance -
+          defender.getCorePhysical().stamina,
+        0
+      );
       break;
     case 'Parry':
       atkResult.delay = 5;

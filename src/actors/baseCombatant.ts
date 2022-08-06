@@ -26,7 +26,10 @@ export class BaseCombatant implements Combatant {
   constructor(
     name: string,
     corePhysical: CorePhysical,
-    weaponExperience: Map<WeaponType, WeaponExperience> = new Map<WeaponType, WeaponExperience>()
+    weaponExperience: Map<WeaponType, WeaponExperience> = new Map<
+      WeaponType,
+      WeaponExperience
+    >()
   ) {
     this.name = name;
     this.coreBasePhysical = cloneDeep(corePhysical);

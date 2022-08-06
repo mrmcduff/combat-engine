@@ -5,6 +5,8 @@ interface BattleLogState {
   results: AttackResult[][];
 }
 
+type BattleLogReturn = [state: BattleLogState, addResults: (results: AttackResult[]) => void, clear: () => void];
+
 interface BattleAction {
   type: 'add' | 'clear';
   results?: AttackResult[];
@@ -14,17 +16,20 @@ function generateEmptyLog(): BattleLogState {
   return { results: [] };
 }
 
-function logReducer(state: BattleLogState, action: BattleAction): BattleLogState {
+function logReducer(
+  state: BattleLogState,
+  action: BattleAction
+): BattleLogState {
   switch (action.type) {
     case 'add':
-      return { results: state.results.concat(action.results ?? []) };
+      return { results: [...state.results, action.results ?? []] };
     case 'clear':
       return generateEmptyLog();
     default:
       return state;
   }
 }
-export function useBattleLog() {
+export function useBattleLog(): BattleLogReturn {
   const [state, dispatch] = useReducer(logReducer, generateEmptyLog());
 
   function addResults(results: AttackResult[]): void {
@@ -34,5 +39,5 @@ export function useBattleLog() {
   function clear() {
     dispatch({ type: 'clear' });
   }
-  return [state, addResults, clear] as const;
+  return [state, addResults, clear];
 }

@@ -6,7 +6,9 @@ import { Combatant } from './combatant';
 
 type StockCharacterType = 'ninja' | 'sumo';
 
-export function generateCorePhysical(charType: StockCharacterType): CorePhysical {
+export function generateCorePhysical(
+  charType: StockCharacterType
+): CorePhysical {
   const emptyAttributes: CorePhysical = {
     baseAtk: 0,
     baseDef: 0,
@@ -49,7 +51,10 @@ export function generateCorePhysical(charType: StockCharacterType): CorePhysical
   }
 }
 
-export function generateWeaponExperience(charType: StockCharacterType, weaponType: WeaponType): WeaponExperience {
+export function generateWeaponExperience(
+  charType: StockCharacterType,
+  weaponType: WeaponType
+): WeaponExperience {
   const invalidExp: WeaponExperience = {
     atkExp: 0,
     defExp: 0,
@@ -82,8 +87,16 @@ export function generateWeaponExperience(charType: StockCharacterType, weaponTyp
   }
 }
 
-export function generateStockCharacter(charType: StockCharacterType): Combatant {
-  const baseCombatant = new BaseCombatant(charType, generateCorePhysical(charType));
-  baseCombatant.weaponExperience.set('Unarmed', generateWeaponExperience(charType, 'Unarmed'));
+export function generateStockCharacter(
+  charType: StockCharacterType
+): Combatant {
+  const baseCombatant = new BaseCombatant(
+    charType,
+    generateCorePhysical(charType)
+  );
+  baseCombatant.weaponExperience.set(
+    'Unarmed',
+    generateWeaponExperience(charType, 'Unarmed')
+  );
   return baseCombatant;
 }

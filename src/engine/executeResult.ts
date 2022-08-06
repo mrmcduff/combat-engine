@@ -11,7 +11,11 @@ import { generateTurnDelay } from './generateTurnDelay';
  * @param overrideRandom a number used to override all random calculations
  * @returns the amount of delay added to the combatant from the result
  */
-export function executeResult(combatant: Combatant, result: AttackResult, overrideRandom?: number): number {
+export function executeResult(
+  combatant: Combatant,
+  result: AttackResult,
+  overrideRandom?: number
+): number {
   const originalStats = combatant.getCorePhysical();
   const originalVariableStats = combatant.getVarPhysical();
   // const weapon = combatant.getEquippedWeapon(); -- when we start having effects on weapons, shields, and armor, that also needs to be considered.
