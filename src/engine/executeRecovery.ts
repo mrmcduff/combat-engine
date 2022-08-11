@@ -1,19 +1,19 @@
 import { Combatant } from 'actors/combatant';
-import { ActionClass } from 'types/actionClass';
+import { ActionType } from 'types/combat/actionType';
 import { StatusType } from 'types/status';
 import { generateNumericAttributeRatio } from './generateNumericAttributeRatio';
 
-function getAdjustmentMultipleByAction(actionClass: ActionClass): number {
-  switch (actionClass) {
-    case 'Attack':
+function getAdjustmentMultipleByActionType(actionType: ActionType): number {
+  switch (actionType) {
+    case ActionType.Attack:
       return 0.2;
-    case 'Active Defense':
+    case ActionType.ActiveDefense:
       return 0.6;
-    case 'Active Dodge':
+    case ActionType.ActiveDodge:
       return 0.4;
-    case 'Rest':
+    case ActionType.Rest:
       return 1;
-    case 'Reset':
+    case ActionType.ActiveReset:
       return 0.8;
     default:
       return 0.5;
@@ -41,7 +41,7 @@ export function getStatusAdjustmentByType(status: StatusType): number {
 
 export function executeRecovery(
   combatant: Combatant,
-  actionClass: ActionClass
+  actionType: ActionType
 ): void {
   const varPhysical = combatant.getVarPhysical();
   const corePhysical = combatant.getCorePhysical();
@@ -60,7 +60,7 @@ export function executeRecovery(
   const healthRatio = varPhysical.health / baseVariablePhysical.health;
   const averageRatio = (3 * staminaRatio + vitalityRatio + healthRatio) / 5;
   const possibleRecovery = Math.floor(averageRatio * varPhysical.fatigue);
-  const actionAdjustment = getAdjustmentMultipleByAction(actionClass);
+  const actionAdjustment = getAdjustmentMultipleByActionType(actionType);
   const statusEffects = combatant.getActiveStatusEffects();
   const statusRatio = statusEffects
     .map((se) => getStatusAdjustmentByType(se[0]))

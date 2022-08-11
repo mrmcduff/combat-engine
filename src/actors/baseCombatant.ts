@@ -3,12 +3,13 @@ import { VariablePhyiscal } from 'types/attributes/variablePhysical';
 import { WeaponExperience } from 'types/attributes/weaponExperience';
 import { Weapon } from 'types/weapons/weapon';
 import { WeaponType } from 'types/weapons/weaponType';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, last } from 'lodash';
 import { calculateBaseHealth } from 'engine/calculateBaseHealth';
 
 import { StatusType } from 'types/status';
 import { calculateBaseFocus } from 'engine/calculateBaseFocus';
 import { calculateBaseBalance } from 'engine/calculateBaseBalance';
+import { ActionStackItem } from 'types/combat/actionStackItem';
 import { Combatant } from './combatant';
 
 export class BaseCombatant implements Combatant {
@@ -27,6 +28,8 @@ export class BaseCombatant implements Combatant {
   statusEffects: Map<StatusType, number>;
 
   equippedWeapon: Weapon | null;
+
+  actionLog: ActionStackItem[];
 
   constructor(
     name: string,
@@ -49,7 +52,16 @@ export class BaseCombatant implements Combatant {
     this.weaponExperience = cloneDeep(weaponExperience);
     this.equippedWeapon = null;
     this.statusEffects = new Map<StatusType, number>();
+    this.actionLog = [];
   }
+
+  getLastAction(): ActionStackItem | null {
+    return last(this.actionLog) ?? null;
+  }
+
+  logAction(action: ActionStackItem): void {
+    this.actionLog.push(action);
+  };
 
   getBaseCorePhysical(): CorePhysical {
     return cloneDeep(this.coreBasePhysical);

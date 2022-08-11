@@ -79,6 +79,14 @@
     "@typescript-eslint/no-redeclare": "error",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "_[a-zA-Z]+" }],
+    "@typescript-eslint/quotes": [
+      "warn",
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
     "react/no-unused-prop-types": "warn",
     "react-hooks/exhaustive-deps": "error"
   },

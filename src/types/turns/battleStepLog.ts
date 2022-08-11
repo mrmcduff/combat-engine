@@ -1,4 +1,4 @@
-import { TurnStep } from "./turnStep";
+import { TurnStep } from './turnStep';
 
 interface BattleStep {
   step: TurnStep;
@@ -7,5 +7,5 @@ interface BattleStep {
 }
 
 export interface BattleStepLog {
-  
+  battleStepLog: BattleStep[];
 }
