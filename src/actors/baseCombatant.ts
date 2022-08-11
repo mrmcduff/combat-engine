@@ -61,7 +61,7 @@ export class BaseCombatant implements Combatant {
 
   logAction(action: ActionStackItem): void {
     this.actionLog.push(action);
-  };
+  }
 
   getBaseCorePhysical(): CorePhysical {
     return cloneDeep(this.coreBasePhysical);

@@ -9,14 +9,18 @@ import { generateNumericAttributeRatio } from './generateNumericAttributeRatio';
  *
  * @param combatant the combatant whose effective stats need to be updated
  */
-export function adjustPhysicalStatsFromFatigue(combatant: Combatant): void {
+export function adjustPhysicalStatsFromFatigue(combatant: Combatant): string[] {
   const { vitality } = combatant.getCorePhysical();
   const { fatigue } = combatant.getVarPhysical();
+  const outputLog: string[] = [];
 
   // Vitality gives you a lift here, but its effects are also decayed
   const fatigueRatio = generateNumericAttributeRatio(fatigue, false);
   const vitalityRatio = generateNumericAttributeRatio(vitality, false);
   const averageRatio = (2 * fatigueRatio + vitalityRatio) / 3;
+  outputLog.push(
+    `Vit ratio: ${vitalityRatio} | Fatigue ratio: ${fatigueRatio} | Adjusting core physical stats with overall ratio ${averageRatio}`
+  );
   const baseStats = combatant.getBaseCorePhysical();
   const updatedCore: CorePhysical = {
     mass: baseStats.mass, // not affected by fatigue for obvious reasons
@@ -30,4 +34,5 @@ export function adjustPhysicalStatsFromFatigue(combatant: Combatant): void {
     agility: baseStats.agility * averageRatio,
   };
   combatant.updateCorePhysical(updatedCore);
+  return outputLog;
 }
