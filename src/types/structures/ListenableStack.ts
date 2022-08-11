@@ -2,7 +2,6 @@ import { clone, last } from 'lodash';
 import { StackListener } from './StackListener';
 
 export class ListenableStack<T> {
-
   private data: T[];
 
   private listeners: Map<number, StackListener>;
@@ -49,5 +48,4 @@ export class ListenableStack<T> {
   removeListener(id: number): boolean {
     return this.listeners.delete(id);
   }
-
 }

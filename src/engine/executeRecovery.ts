@@ -42,7 +42,8 @@ export function getStatusAdjustmentByType(status: StatusType): number {
 export function executeRecovery(
   combatant: Combatant,
   actionType: ActionType
-): void {
+): string[] {
+  const outputLog: string[] = [];
   const varPhysical = combatant.getVarPhysical();
   const corePhysical = combatant.getCorePhysical();
   const baseVariablePhysical = combatant.getBaseVariablePhysical();
@@ -71,6 +72,11 @@ export function executeRecovery(
     Math.round(statusRatio * actionAdjustment * possibleRecovery),
     varPhysical.fatigue
   );
+
+  const updatedFatigue = varPhysical.fatigue - actualRecovery;
+  outputLog.push(
+    `${combatant.name} recovered from from fatigue ${varPhysical.fatigue} to ${updatedFatigue}`
+  );
   combatant.updateVarPhysical({
     ...varPhysical,
     fatigue: varPhysical.fatigue - actualRecovery,
@@ -78,4 +84,5 @@ export function executeRecovery(
 
   // Now add balance recovery!
   // Now add focus recovery!
+  return outputLog;
 }
