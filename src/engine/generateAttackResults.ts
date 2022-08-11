@@ -1,6 +1,6 @@
-import { Combatant } from 'actors/combatant';
 import { AttackResult } from 'types/combat/attackResult';
 import { AttackResultClass } from 'types/combat/attackResultClass';
+import { CombatReady } from 'types/combat/combatReady';
 
 function generateEmptyAttackResult(
   resultClass: AttackResultClass
@@ -20,8 +20,8 @@ function generateEmptyAttackResult(
 }
 
 export function generateAttackResults(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   resultClass: AttackResultClass
 ): [AttackResult, AttackResult] {
   const atkResult = generateEmptyAttackResult(resultClass);

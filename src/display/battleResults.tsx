@@ -1,6 +1,6 @@
-import { Box, Text } from "ink";
-import React from "react";
-import { AttackResult } from "types/combat/attackResult";
+import { Box, Text } from 'ink';
+import React from 'react';
+import { AttackResult } from 'types/combat/attackResult';
 
 interface BattleResultsProps {
   results: AttackResult[][];

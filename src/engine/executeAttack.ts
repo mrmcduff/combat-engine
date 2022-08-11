@@ -1,6 +1,6 @@
-import { Combatant } from 'actors/combatant';
 import { ATTR_MAX } from 'constants/attributeValues';
 import { AttackResult } from 'types/combat/attackResult';
+import { CombatReady } from 'types/combat/combatReady';
 import { generateAttackResults } from './generateAttackResults';
 import { generateNumericAttributeRatio } from './generateNumericAttributeRatio';
 import { getBoundedRandomValue } from './getBoundedRandomValue';
@@ -9,8 +9,8 @@ const SUCCESS_THRESHOLD = 50;
 const RATIO_MAX = 10;
 
 function aimScore(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   overrideRandom?: number
 ) {
   const { baseAtk } = attacker.getCorePhysical();
@@ -28,8 +28,8 @@ function aimScore(
 }
 
 function dodgeScore(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   overrideRandom?: number
 ) {
   const atkQuick = attacker.getCorePhysical().quickness;
@@ -64,8 +64,8 @@ function dodgeScore(
 }
 
 function parryScore(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   overrideRandom?: number
 ) {
   const atkQuick = attacker.getCorePhysical().quickness;
@@ -96,8 +96,8 @@ function parryScore(
 }
 
 function blockScore(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   overrideRandom?: number
 ) {
   const { baseAtk, quickness: atkQuick } = attacker.getCorePhysical();
@@ -141,8 +141,8 @@ function blockScore(
 }
 
 export function executeAttack(
-  attacker: Combatant,
-  defender: Combatant,
+  attacker: CombatReady,
+  defender: CombatReady,
   overrideRandom?: number
 ): [AttackResult, AttackResult, string[]] {
   // 1. Would hit?

@@ -1,6 +1,6 @@
-import { Combatant } from "actors/combatant";
-import { Box, Text } from "ink";
-import React from "react";
+import { Combatant } from 'actors/combatant';
+import { Box, Text } from 'ink';
+import React from 'react';
 
 interface TurnBarProps {
   turns: [Combatant, number][];

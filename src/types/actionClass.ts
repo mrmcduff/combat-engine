@@ -3,7 +3,8 @@ export type ActionClass =
   | 'Rest'
   | 'Active Defense'
   | 'Active Dodge'
-  | 'Reset';
+  | 'Reset'
+  | 'Move';
 
 export const ACTION_CLASS: ActionClass[] = [
   'Attack',
@@ -11,6 +12,7 @@ export const ACTION_CLASS: ActionClass[] = [
   'Active Defense',
   'Active Dodge',
   'Reset',
+  'Move',
 ];
 
 const ACTION_CLASS_STRINGS = [
@@ -19,6 +21,7 @@ const ACTION_CLASS_STRINGS = [
   'Active Defense',
   'Active Dodge',
   'Reset',
+  'Move',
 ];
 
 export function isActionClass(item: string): item is ActionClass {
