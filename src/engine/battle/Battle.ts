@@ -54,6 +54,29 @@ export class Battle implements StackListener {
     this.combatants.forEach((cmb) => this.combatantMap.set(cmb.name, cmb));
   }
 
+  init(combatants: Combatant[]) {
+    // Things to add: An initial delay array, a "locations" array, a BattleBoard or setting for the battle
+    // and any special circumstances.
+    this.combatants = combatants;
+    this.usingStackListener = false;
+    this.upcomingTurns = generateTurnArray(
+      combatants,
+      new Array(combatants.length).fill(0)
+    );
+    this.currentCombatantTurn =
+      this.upcomingTurns.length > 0 ? this.upcomingTurns[0]![0] : null;
+    this.currentTurn = 0;
+    this.currentTurnStep = TurnStep.SelectAction;
+    this.inProgressActionStack = [];
+    this.queuedActionStack = new ListenableStack<ActionStackItem>();
+    // Not registering as a listener until we start using stack/listener mechanism
+    this.listenerId = this.usingStackListener
+      ? this.queuedActionStack.setListener(this)
+      : 0;
+    this.combatantMap = new Map();
+    this.combatants.forEach((cmb) => this.combatantMap.set(cmb.name, cmb));
+  }
+
   onStackChange(): void {
     // TODO: later, update this if needed.
     if (this.queuedActionStack.size() > 0) {
